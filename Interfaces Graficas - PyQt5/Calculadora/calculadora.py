@@ -133,7 +133,7 @@ class main_window(QWidget):
                     if (self.segundo_operando != 0):
                         self.primeiro_operando //= self.segundo_operando
                     else:
-                        self.message_box=QMessageBox.warning(self, "Erro", "Divisão por 0")
+                        QMessageBox.warning(self, "Erro", "Divisão por 0")
 
                 self.primeiro_operando=str(self.primeiro_operando)
                 self.display.setText(self.primeiro_operando)
