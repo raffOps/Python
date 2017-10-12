@@ -43,7 +43,6 @@ class main_window(QWidget):
         self.btn_erase = QPushButton("<-")
         self.display = QLabel()
 
-
         self.btn_0.clicked.connect(lambda: self.analisar_equacao("0"))
         self.btn_1.clicked.connect(lambda: self.analisar_equacao("1"))
         self.btn_2.clicked.connect(lambda: self.analisar_equacao("2"))
@@ -61,7 +60,6 @@ class main_window(QWidget):
         self.btn_equ.clicked.connect(lambda: self.analisar_equacao("="))
         self.btn_eraseAll.clicked.connect(lambda: self.analisar_equacao("k"))
         self.btn_erase.clicked.connect(lambda: self.analisar_equacao("z"))
-
 
     def set_layout(self):
         self.layout_1 = QHBoxLayout()
@@ -166,14 +164,3 @@ if __name__ == "__main__":
     app = main_window()
     app.show()
     sys.exit(root.exec_())
-
-
-
-
-
-
-
-
-
-
-
