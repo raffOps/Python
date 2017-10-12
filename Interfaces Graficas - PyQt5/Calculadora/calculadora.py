@@ -1,12 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel,QVBoxLayout,QHBoxLayout,QMessageBox)
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt, QTimer
-
 import sys
-import time
-
 
 class main_window(QWidget):
     def __init__(self):
@@ -17,6 +12,7 @@ class main_window(QWidget):
         self.primeiro_operando = []
         self.segundo_operando = []
         self.operador = None
+        self.easteregg = 0
 
     def settings(self):
         self.resize(200,200)
@@ -101,13 +97,16 @@ class main_window(QWidget):
             del (self.primeiro_operando)
             self.primeiro_operando = []
             self.operador = None
-        elif digito == "z":
-            if digito == None:
+
+        elif digito == "z" and (len(self.primeiro_operando) > 0 or len(self.segundo_operando) > 0):
+            if self.operador == None:
                 del(self.primeiro_operando[-1])
+                print(self.primeiro_operando)
                 self.display.setText(''.join(self.primeiro_operando))
             else:
                 del (self.segundo_operando[-1])
                 self.display.setText(''.join(self.segundo_operando))
+
         elif digito in "0123456789":
             if self.operador == None:
                 self.primeiro_operando.append(digito)
@@ -120,16 +119,10 @@ class main_window(QWidget):
         elif digito in "/*-+" and self.operador == None:
             self.operador = digito
             self.primeiro_operando = int(''.join(self.primeiro_operando))
-            print("\nNumero: ")
-            print(self.primeiro_operando)
 
         elif digito == "=":
             if self.operador != None:
                 self.segundo_operando = int(''.join(self.segundo_operando))
-
-                print("\nNumero: ")
-                print(self.segundo_operando)
-
                 if self.operador == "+":
                     self.primeiro_operando += self.segundo_operando
                 elif self.operador == '-':
@@ -137,8 +130,10 @@ class main_window(QWidget):
                 elif self.operador == "*":
                     self.primeiro_operando *= self.segundo_operando
                 else:
-                    self.primeiro_operando //= self.segundo_operando
-                print("1")
+                    if (self.segundo_operando != 0):
+                        self.primeiro_operando //= self.segundo_operando
+                    else:
+                        self.message_box=QMessageBox.warning(self, "Erro", "Divisão por 0")
 
                 self.primeiro_operando=str(self.primeiro_operando)
                 self.display.setText(self.primeiro_operando)
@@ -148,11 +143,6 @@ class main_window(QWidget):
                 self.primeiro_operando = []
                 self.operador = None
 
-
-
-
-                #print(self.primeiro_operando)
-        #print(self.segundo_operando)
 
 if __name__ == "__main__":
     root = QApplication([])
