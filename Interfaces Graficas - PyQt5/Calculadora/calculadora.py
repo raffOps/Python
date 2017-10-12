@@ -136,7 +136,6 @@ class main_window(QWidget):
                 self.display.setText(str(self.primeiro_operando // self.segundo_operando))
 
     def __verifica_inconsitencia(self):
-
         if self.equacao[0] in self.operadores:
             self.messsage_box= QMessageBox.warning(self, "Erro: Equação iniciando com operadores", self.text)
             return False
