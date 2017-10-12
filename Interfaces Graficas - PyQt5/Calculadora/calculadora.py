@@ -14,10 +14,9 @@ class main_window(QWidget):
         self.settings()
         self.create_widget()
         self.set_layout()
-        self.equacao=[]
-        self.count_operator=0
-        self.calcula_proximo=False
-        self.operadores=["+", "-", "/", "x"]
+        self.primeiro_operando = []
+        self.segundo_operando = []
+        self.operador = None
 
     def settings(self):
         self.resize(200,200)
@@ -54,7 +53,7 @@ class main_window(QWidget):
         self.btn_8.clicked.connect(lambda: self.analisar_equacao("8"))
         self.btn_9.clicked.connect(lambda: self.analisar_equacao("9"))
         self.btn_div.clicked.connect(lambda: self.analisar_equacao("/"))
-        self.btn_mul.clicked.connect(lambda: self.analisar_equacao("x"))
+        self.btn_mul.clicked.connect(lambda: self.analisar_equacao("*"))
         self.btn_min.clicked.connect(lambda: self.analisar_equacao("-"))
         self.btn_plus.clicked.connect(lambda: self.analisar_equacao("+"))
         self.btn_equ.clicked.connect(lambda: self.analisar_equacao("="))
@@ -94,70 +93,66 @@ class main_window(QWidget):
         self.setLayout(self.layout_master)
 
     def analisar_equacao(self, digito):
-        self.index_max = len(self.equacao) - 1
         if digito == "k":
             self.display.clear()
-            self.equacao[:] = []
+            self.operador = None
+            del (self.segundo_operando)
+            self.segundo_operando = []
+            del (self.primeiro_operando)
+            self.primeiro_operando = []
+            self.operador = None
         elif digito == "z":
-            del[self.equacao[-1]]
-            self.display.setText(''.join(self.equacao))
+            if digito == None:
+                del(self.primeiro_operando[-1])
+                self.display.setText(''.join(self.primeiro_operando))
+            else:
+                del (self.segundo_operando[-1])
+                self.display.setText(''.join(self.segundo_operando))
+        elif digito in "0123456789":
+            if self.operador == None:
+                self.primeiro_operando.append(digito)
+                print(self.primeiro_operando)
+                self.display.setText(''.join(self.primeiro_operando))
+            else:
+                self.segundo_operando.append(digito)
+                self.display.setText(''.join(self.segundo_operando))
+                print(self.segundo_operando)
+        elif digito in "/*-+" and self.operador == None:
+            self.operador = digito
+            self.primeiro_operando = int(''.join(self.primeiro_operando))
+            print("\nNumero: ")
+            print(self.primeiro_operando)
 
         elif digito == "=":
-            if not self.__verifica_inconsistencia():
-                return
-            else:
-                self.__calcula_equacao()
-        else:
-            self.equacao.append(digito)
-            self.display.setText(''.join(self.equacao))
+            if self.operador != None:
+                self.segundo_operando = int(''.join(self.segundo_operando))
 
-    def __calcula_equacao(self):
-        indice_operador=None
-        for operador in self.operadores:
-            if operador in self.equacao:
-                indice_operador=self.equacao.index(operador)
-                break
-        #Divide a lista em duas partes, transforma cada numa string e depois converte pra int
-        self.primeiro_operando = int(''.join(self.equacao[:indice_operador]))
-        self.segundo_operando = int(''.join(self.equacao[indice_operador+1:]))
+                print("\nNumero: ")
+                print(self.segundo_operando)
 
-        if self.equacao[indice_operador] == "+":
-            self.display.setText(str(self.primeiro_operando + self.segundo_operando))
-        if self.equacao[indice_operador] == "-":
-            self.display.setText(str(self.primeiro_operando - self.segundo_operando))
-        if self.equacao[indice_operador] == "*":
-            self.display.setText(str(self.primeiro_operando * self.segundo_operando))
-        if self.equacao[indice_operador] == "/":
-            if self.segundo_operando == 0:
-                self.messsage_box=QMessageBox.warning(self,"Divisão por 0",self.txt)
-            else:
-                self.display.setText(str(self.primeiro_operando // self.segundo_operando))
+                if self.operador == "+":
+                    self.primeiro_operando += self.segundo_operando
+                elif self.operador == '-':
+                    self.primeiro_operando -= self.segundo_operando
+                elif self.operador == "*":
+                    self.primeiro_operando *= self.segundo_operando
+                else:
+                    self.primeiro_operando //= self.segundo_operando
+                print("1")
 
-    def __verifica_inconsitencia(self):
-        if self.equacao[0] in self.operadores:
-            self.messsage_box= QMessageBox.warning(self, "Erro: Equação iniciando com operadores", self.text)
-            return False
-        elif self.equacao[self.index_max] in self.operadores:
-            self.messsage_box = QMessageBox.warning(self, "Erro: Equação terminando com operador", self.text)
-            return False
+                self.primeiro_operando=str(self.primeiro_operando)
+                self.display.setText(self.primeiro_operando)
+                del(self.segundo_operando)
+                self.segundo_operando = []
+                del (self.primeiro_operando)
+                self.primeiro_operando = []
+                self.operador = None
 
-        for indice in range(self.index_max + 1):
-            if indice != 0 or indice != self.index_max:
-                if ((self.equacao[indice - 1] in self.operadores or
-                             self.equacao[indice + 1] in self.operadores) and
-                            self.equacao[indice] in self.operadores):
-                    self.messsage_box = QMessageBox.warning(self, "Erro: Dois operadores seguidos", self.text)
-                    return False
-            elif (indice == 0 and self.equacao[0] in self.operadores
-                  and self.equacao[1] in self.operadores):
-                self.messsage_box = QMessageBox.warning(self, "Erro: Dois operadores seguidos", self.text)
-                return False
 
-            elif (indice == self.index_max and self.equacao[self.index_max] in self.operadores
-                  and self.equacao[self.index_max - 1] in self.operadores):
-                self.messsage_box = QMessageBox.warning(self, "Erro: Dois operadores seguidos", self.text)
-                return False
-        return True
+
+
+                #print(self.primeiro_operando)
+        #print(self.segundo_operando)
 
 if __name__ == "__main__":
     root = QApplication([])

@@ -99,3 +99,5 @@ ENV/
 .mypy_cache/
 *.iml
 *.xml
+*.xml___jb_tmp___
+*.xml___jb_old___
