@@ -1,10 +1,9 @@
 def makeMATRIX(arquivo):
-    file = open(arquivo, "r")
-    data = []
-    for linha in file:
-        dados = linha.split("|")
-        data.append(dados)
-    file.close()
+    with open(arquivo, "r") as file:
+        data = []
+        for linha in file:
+            dados = linha.split("|")
+            data.append(dados)
     return data
 
 

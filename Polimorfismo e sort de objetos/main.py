@@ -2,10 +2,10 @@ class Grupo(list):
     def __init__(self):
         self.pessoas=Pessoa()
     def __str__(self): #sobrecarga do método print. Irá printar os dados de todas as pessoas do grupo
-        str=""
-        for pessoa in self.pessoas: #percorre a lista e vai adicionando os dados das pessoas há uma string única
-            str+="\nNome: %s || Idade: %d"%(pessoa.nome,pessoa.idade)
-        return str #retorna a string
+        return "".join(
+            "\nNome: %s || Idade: %d" % (pessoa.nome, pessoa.idade)
+            for pessoa in self.pessoas
+        )
 
     def sort(self):
         copia = self.pessoas[:]

@@ -7,17 +7,16 @@ from MDeraseDATA import eraseDATABASE
 ARQUIVO="DVDS"
 
 def acrescentar(arquivo):
-    file=open(arquivo,"a")
-    codigo = verifyCODE(ARQUIVO)
-    titulo = input("Titulo: ")
-    diretor = input("Diretor: ")
-    lançamento = str(validateDATA("Data de lançamento (entre 1950 e 2016): ", 2016, 1950, "int"))
-    preço = str(validateDATA("Preço (entre R$ 10 e R$ 60 ): ", 60, 10, "float"))
-    file.writelines([codigo,"|",titulo, "|", diretor, "|", lançamento, "|", preço,"|","\n"])
-    file.close()
+    with open(arquivo,"a") as file:
+        codigo = verifyCODE(ARQUIVO)
+        titulo = input("Titulo: ")
+        diretor = input("Diretor: ")
+        lançamento = str(validateDATA("Data de lançamento (entre 1950 e 2016): ", 2016, 1950, "int"))
+        preço = str(validateDATA("Preço (entre R$ 10 e R$ 60 ): ", 60, 10, "float"))
+        file.writelines([codigo,"|",titulo, "|", diretor, "|", lançamento, "|", preço,"|","\n"])
 
 x=True
-while x==True:
+while x:
     opcao=validateDATA("\n1-Listar || 2 -Adicionar || 3-Excluir || 4-Sair\nDigite sua opcao: ",4,1,"int")
     if opcao==1:
         printDATABASE(ARQUIVO,"Código","Titulo", "Diretor", "Data de lançamento", "Preço")

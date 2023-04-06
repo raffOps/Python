@@ -13,8 +13,8 @@ class DownloaderMusic(QThread):
         self.name = name
 
     def run(self):
-        mescl = self.path+"/"+self.name
-        with open(mescl+'.mp3', 'wb') as f:
+        mescl = f"{self.path}/{self.name}"
+        with open(f'{mescl}.mp3', 'wb') as f:
             f.write(requests.get(self.url).content)
 
 class Main(QWidget):
@@ -54,18 +54,14 @@ class Main(QWidget):
             self.thread_qt()
 
     def verify_fields(self):
-        if self.path == None:
+        if self.path is None:
             return False
-        else:
-            strings = [self.edit_url.text(), self.edit_name.text(), self.path]
-            regex_validate = QRegExp("*.mp3")
-            regex_validate.setPatternSyntax(QRegExp.Wildcard)
-            emptys = 0
-            for string in strings:
-                if len(string.split()) == 0:
-                    emptys += 1
-            if emptys == 0 and regex_validate.exactMatch(self.editUrl.text()):
-                return True
+        strings = [self.edit_url.text(), self.edit_name.text(), self.path]
+        regex_validate = QRegExp("*.mp3")
+        regex_validate.setPatternSyntax(QRegExp.Wildcard)
+        emptys = sum(len(string.split()) == 0 for string in strings)
+        if emptys == 0 and regex_validate.exactMatch(self.editUrl.text()):
+            return True
 
     def thread_qt(self):
         url = self.edit_url.text()

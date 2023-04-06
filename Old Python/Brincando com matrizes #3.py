@@ -6,7 +6,6 @@ carrosTOP=0
 empresa=[[0,0],[0,0],[0,0],[0,0]]
 preferida=empresa[0][0]
 melhor=empresa[0][1]
-cont=0
 pospreferida=0
 posmelhor=0
 
@@ -28,14 +27,16 @@ while continuar=='s':
             print("\nEntrada invalida")
             condicao = int(input("\n 1 - Ruim || 2 - Regular || 3 - Bom || 4 - ótimo\nDigite a opcao que mais adequada para a condição do carro: "))
 
-    dados.update({codigo:[fabricante,ano,condicao]})
+    dados[codigo] = [fabricante,ano,condicao]
     codigo+=1
     continuar=input("Digite s se deseja continuar: ")
 
 
 print("\n\n")
-for x in dados:
-    print("Código: %s || Fabricante: %s || Ano de fabricao: %s || Estado: %s" % (x,dados[x][0],dados[x][1],dados[x][2]))
+for x, value in dados.items():
+    print(
+        f"Código: {x} || Fabricante: {value[0]} || Ano de fabricao: {dados[x][1]} || Estado: {dados[x][2]}"
+    )
     if dados[x][0]== 1:
         empresa[0][0]+= 1
         empresa[0][1]+=dados[x][2]
@@ -54,22 +55,26 @@ for x in range(4):
         empresa[x][1]=empresa[x][1]/empresa[x][0]
 
 print("\n\nCarros considerados muito bem conservados: ")
-for x in dados:
-    if (dados[x][1] < 1910 and dados[x][2] == 3) or (dados[x][1] < 1910 and dados[x][2] == 4):
-        print("Código: %s || Fabricante: %s || Ano de fabricao: %s || Estado: %s" % (x, dados[x][0], dados[x][1], dados[x][2]))
+for x, value_ in dados.items():
+    if (
+        value_[1] < 1910
+        and dados[x][2] == 3
+        or (dados[x][1] < 1910 and dados[x][2] == 4)
+    ):
+        print(
+            f"Código: {x} || Fabricante: {dados[x][0]} || Ano de fabricao: {dados[x][1]} || Estado: {dados[x][2]}"
+        )
         carrosTOP+=1
 if int(carrosTOP)==0:
     print(" ----- Nenhum carro antendeu ao requisitos para entrar nessa lista")
 
-for x in range(4):
+for cont, x in enumerate(range(4)):
     if empresa[x][0]>preferida:
         preferida=empresa[x][0]
         pospreferida=cont
     if empresa[x][1]>melhor:
         melhor=empresa[x][1]
         posmelhor=cont
-    cont+=1
-
 if int(pospreferida)==0:
     print("Fabricante preferida: Ford")
 elif int(pospreferida)==1:

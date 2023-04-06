@@ -15,14 +15,26 @@ class cliente:
         self.saldo+=deposito
 
     def sacar(self):
-        print("Saldo disponivel para saque: %s" % self.saldo)
+        print(f"Saldo disponivel para saque: {self.saldo}")
         saque=validateDATA("Digite a quantidade que quer sacar: ", self.saldo,0,"float")
         self.saldo-=saque
 
-    def cadastrar(Cliente,arquivo):
-        Cliente = Cliente.__dict__
+    def cadastrar(self, arquivo):
+        self = self.__dict__
         file=open(arquivo,"a")
-        file.writelines([str(Cliente["conta"]), "|", str(Cliente["nome"]), "|", str(Cliente["senha"]), "|",str(Cliente["saldo"]),"|","\n"])
+        file.writelines(
+            [
+                str(self["conta"]),
+                "|",
+                str(self["nome"]),
+                "|",
+                str(self["senha"]),
+                "|",
+                str(self["saldo"]),
+                "|",
+                "\n",
+            ]
+        )
 
 
     def login(arquivo):

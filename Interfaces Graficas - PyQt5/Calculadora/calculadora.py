@@ -99,7 +99,7 @@ class main_window(QWidget):
             self.operador = None
 
         elif digito == "z" and (len(self.primeiro_operando) > 0 or len(self.segundo_operando) > 0):
-            if self.operador == None:
+            if self.operador is None:
                 del(self.primeiro_operando[-1])
                 print(self.primeiro_operando)
                 self.display.setText(''.join(self.primeiro_operando))
@@ -108,7 +108,7 @@ class main_window(QWidget):
                 self.display.setText(''.join(self.segundo_operando))
 
         elif digito in "0123456789":
-            if self.operador == None:
+            if self.operador is None:
                 self.primeiro_operando.append(digito)
                 print(self.primeiro_operando)
                 self.display.setText(''.join(self.primeiro_operando))
@@ -116,7 +116,7 @@ class main_window(QWidget):
                 self.segundo_operando.append(digito)
                 self.display.setText(''.join(self.segundo_operando))
                 print(self.segundo_operando)
-        elif digito in "/*-+" and self.operador == None:
+        elif digito in "/*-+" and self.operador is None:
             self.operador = digito
             self.primeiro_operando = int(''.join(self.primeiro_operando))
 
@@ -129,12 +129,11 @@ class main_window(QWidget):
                     self.primeiro_operando -= self.segundo_operando
                 elif self.operador == "*":
                     self.primeiro_operando *= self.segundo_operando
-                else:
-                    if (self.segundo_operando != 0):
-                        self.primeiro_operando //= self.segundo_operando
-                    else:
-                        QMessageBox.warning(self, "Erro", "Divisão por 0")
+                elif self.segundo_operando == 0:
+                    QMessageBox.warning(self, "Erro", "Divisão por 0")
 
+                else:
+                    self.primeiro_operando //= self.segundo_operando
                 self.primeiro_operando=str(self.primeiro_operando)
                 self.display.setText(self.primeiro_operando)
                 del(self.segundo_operando)

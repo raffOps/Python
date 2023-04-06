@@ -3,8 +3,8 @@ from MDverifyCODE import verifyCODE
 
 def increaseDATABASE(arquivo):
     empresa=input("\nFord || Ferrari || Fiat || Chevrolet\nDigite o nome da empresa: ")
-    if empresa!="Ford" and empresa!="Ferrari" and empresa!="Fiat" and empresa!="Chevrolet":
-        while empresa!="Ford" and empresa!="Ferrari" and empresa!="Fiat" and empresa!="Chevrolet":
+    if empresa not in ["Ford", "Ferrari", "Fiat", "Chevrolet"]:
+        while empresa not in ["Ford", "Ferrari", "Fiat", "Chevrolet"]:
             empresa = input("Ford || Ferrari || Fiat || Chevrolet\nDigite o nome da empresa: ")
 
     ano=str(validateDATA("\nDigite a data de fabricação, que deve ser entre 1900 e 1950: ",1950,1900))
@@ -16,9 +16,8 @@ def increaseDATABASE(arquivo):
             codigo = str(code("arquivo"))
 
 
-    file=open(arquivo,"a")
-    file.writelines([empresa,"|",ano,"|",estado,"|",codigo,"|","\n"])
-    file.close()
+    with open(arquivo,"a") as file:
+        file.writelines([empresa,"|",ano,"|",estado,"|",codigo,"|","\n"])
 
 def decreaseDATABASE(arquivo):
         x=False

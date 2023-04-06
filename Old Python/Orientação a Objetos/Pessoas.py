@@ -8,10 +8,8 @@ class humano:
 
     def envelhecer(self):
         if self.idade<=21:
-            self.idade+=1
             self.altura+=0.05
-        else:
-            self.idade+=1
+        self.idade+=1
 
     def engordar(self):
         engorda=validateDATA("Digite o quanto você engordou (float): ",100,0,"float")

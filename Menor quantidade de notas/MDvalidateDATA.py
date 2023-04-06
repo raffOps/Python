@@ -8,9 +8,9 @@ def validateDATA(texto,a,b,c):
     if a=="-" and b=="-":
         try:
             if c == "int":
-                x = int(input("%s" % texto))
+                x = int(input(f"{texto}"))
             elif c == "float":
-                x = float(input("%s" % texto))
+                x = float(input(f"{texto}"))
             return x
         except ValueError:
             return validateDATA(texto, a, b, c)
@@ -19,49 +19,49 @@ def validateDATA(texto,a,b,c):
     elif a!="-" and b=="-":
         try:
             if c == "int":
-                x = int(input("%s" % texto))
+                x = int(input(f"{texto}"))
                 if x < a:
                     while x < a:
-                        x = int(input("%s" % texto))
+                        x = int(input(f"{texto}"))
             elif c == "float":
-                x = float(input("%s" % texto))
+                x = float(input(f"{texto}"))
                 if x < a:
                     while x < a:
-                        x = float(input("%s" % texto))
+                        x = float(input(f"{texto}"))
             return x
         except ValueError:
             return validateDATA(texto, a, b, c)
 
 
-    elif a=="-" and b!="-":
+    elif a == "-":
         try:
             if c == "int":
-                x = int(input("%s" % texto))
+                x = int(input(f"{texto}"))
                 if x > b:
                     while x > b:
-                        x = int(input("%s" % texto))
+                        x = int(input(f"{texto}"))
             elif c == "float":
-                x = float(input("%s" % texto))
+                x = float(input(f"{texto}"))
                 if x > b:
                     while x > b:
-                        x = float(input("%s" % texto))
+                        x = float(input(f"{texto}"))
             return x
         except ValueError:
             return validateDATA(texto, a, b, c)
 
 
-    elif a!="-" and b!="-":
+    else:
         try:
             if c == "int":
-                x = int(input("%s" % texto))
+                x = int(input(f"{texto}"))
                 if x > a or x < b:
                     while x > a or x < b:
-                        x = int(input("%s" % texto))
+                        x = int(input(f"{texto}"))
             elif c == "float":
-                x = float(input("%s" % texto))
+                x = float(input(f"{texto}"))
                 if x > a or x < b:
                     while x > a or x < b:
-                        x = float(input("%s" % texto))
+                        x = float(input(f"{texto}"))
             return x
         except ValueError:
             return validateDATA(texto, a, b, c)

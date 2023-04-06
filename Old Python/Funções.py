@@ -17,7 +17,7 @@ def decrescenta():
         if x in LISTA:
             LISTA.remove(x)
         else:
-            print("%s não está na lista" % x)
+            print(f"{x} não está na lista")
     else:
         print("Lista vazia")
 

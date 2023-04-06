@@ -8,9 +8,8 @@ def fatorial(x):
     return fatorial
 
 def cosseno(numerador,denominador):
-    cont=0
     soma=0
-    while cont<30:
+    for cont in range(30):
         numerador=numerador**denominador
         denominador=fatorial(denominador)
         print(denominador)
@@ -20,7 +19,6 @@ def cosseno(numerador,denominador):
         else:
             soma += numerador / denominador
         denominador+=2
-        cont+=1
     return soma
 
 print(1-cosseno(5,2))

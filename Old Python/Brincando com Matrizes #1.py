@@ -1,21 +1,21 @@
 
 #tudo errado
 contadorLinha=0
-contadorColuna=0
 contadorPrint=0
 elemento=list(range(4))
 
-while contadorColuna<4:
-    elemento[contadorColuna] = input("Digite o termo da linha %s e coluna %s: " % (contadorLinha, contadorColuna))
-    contadorColuna += 1
+for contadorColuna in range(4):
+    elemento[contadorColuna] = input(
+        f"Digite o termo da linha {contadorLinha} e coluna {contadorColuna}: "
+    )
 matriz = (elemento[0], elemento[1], elemento[2], elemento[3])
 contadorLinha+=1
 
 while contadorLinha<4:
-    contadorColuna = 0
-    while contadorColuna<4:
-        elemento[contadorColuna]=input("Digite o termo da linha %s e coluna %s: " % (contadorLinha,contadorColuna))
-        contadorColuna+=1
+    for contadorColuna in range(4):
+        elemento[contadorColuna] = input(
+            f"Digite o termo da linha {contadorLinha} e coluna {contadorColuna}: "
+        )
     contadorLinha+=1
     matriz=matriz,(elemento[0],elemento[1],elemento[2],elemento[3])
 

@@ -2,10 +2,7 @@ class Banco(object):
     __total=1000
     reserva=__total*0.1
     def podefazeremprestimos(self,valor):
-        if Banco.__total - valor > Banco.reserva:
-            return True
-        else:
-            return False
+        return Banco.__total - valor > Banco.reserva
 
 class Conta(Banco):
     def __init__(self,saldo=0,id=0,senha=0):
@@ -26,15 +23,9 @@ class Conta(Banco):
         else:
             print("Senha incorreta")
     def podereceberemprestimos(self,valor):
-        if self.__saldo > valor and Conta.podefazeremprestimos(self,valor):
-            return True
-        else:
-            return False
+        return bool(self.__saldo > valor and Conta.podefazeremprestimos(self,valor))
     def getsaldo(self,senha):
-        if senha==self.__senha:
-            return self.__saldo
-        else:
-            return "Senha incorreta"
+        return self.__saldo if senha==self.__senha else "Senha incorreta"
 
 
 conta1=Conta(100,7845,"abcd")
